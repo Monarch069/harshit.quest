@@ -31,7 +31,8 @@ More detail on the [projects page](/projects/).
 
 ## Contact
 
-- Email: [harshitjosh2008@gmail.com](mailto:harshitjosh2008@gmail.com)
+- Email: [harshit@harshit.quest](mailto:harshit@harshit.quest)
 - LinkedIn: [monarch069](https://www.linkedin.com/in/monarch069)
+- GitHub: [Monarch069](https://github.com/Monarch069)
 
 Thanks for stopping by!
