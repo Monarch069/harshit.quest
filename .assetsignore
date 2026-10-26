@@ -1,0 +1,5 @@
+.*
+site.toml
+skeleton.html
+worker.js
+wrangler.jsonc
