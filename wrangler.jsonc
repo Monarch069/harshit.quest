@@ -10,7 +10,8 @@
   "compatibility_date": "2026-08-23",
 
   "routes": [
-    { "pattern": "harshit.quest", "custom_domain": true }
+    { "pattern": "harshit.quest", "custom_domain": true },
+    { "pattern": "www.harshit.quest", "custom_domain": true }
   ],
 
   "assets": {

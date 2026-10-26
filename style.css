@@ -74,7 +74,7 @@ body > nav {
 
 body > nav {
   margin-bottom: 1.5rem;
-  color: var(--overlay-1);
+  color: var(--subtext-0);
 }
 
 ::selection {
@@ -571,6 +571,6 @@ kbd {
   table {
     display: block;
     overflow-x: auto;
-    white-space: nowrap;
+    white-space: normal;
   }
 }

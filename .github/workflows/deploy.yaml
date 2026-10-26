@@ -40,6 +40,22 @@ jobs:
           cmake --build builder/build --config Release
 
       # ─────────────────────────────────────────────
+      # Inline CSS (removes the only render-blocking request)
+      # ─────────────────────────────────────────────
+
+      - name: Inline CSS
+        run: |
+          npx --yes lightningcss-cli@1.33.0 --minify style.css -o "$RUNNER_TEMP/style.min.css"
+          node -e '
+            const fs = require("fs");
+            const css = fs.readFileSync(process.argv[1], "utf8").trim().replace(/<\/style/gi, "<\\/style");
+            const link = "<link rel=\"stylesheet\" href=\"/style.css\">";
+            const html = fs.readFileSync("skeleton.html", "utf8");
+            if (!html.includes(link)) throw new Error("stylesheet link not found in skeleton.html");
+            fs.writeFileSync("skeleton.html", html.replace(link, () => `<style>${css}</style>`));
+          ' "$RUNNER_TEMP/style.min.css"
+
+      # ─────────────────────────────────────────────
       # Generate dist/
       # ─────────────────────────────────────────────
 

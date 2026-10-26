@@ -5,8 +5,10 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
-    if (url.protocol === "http:") {
+    // One hop to the canonical origin, whether the visitor came in on www, http, or both.
+    if (url.protocol === "http:" || url.hostname === "www.harshit.quest") {
       url.protocol = "https:";
+      url.hostname = "harshit.quest";
       return Response.redirect(url.toString(), 301);
     }
 
