@@ -1,4 +1,5 @@
 ---
+description: "Projects by Harshit Joshi: EcoCell Air Cleaner, Sera (time-series ML for trading) and CeresAstro (Chandrayaan-2 signal detection)."
 series_title: "Projects"
 ---
 {{extend "series"}}

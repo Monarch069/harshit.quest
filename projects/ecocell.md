@@ -1,4 +1,5 @@
 ---
+description: "EcoCell: an electrostatic precipitator air cleaner in a slide-out cassette for small factories, designed and prototyped at IIT Jammu."
 series_title: "Projects"
 post_title: "EcoCell Air Cleaner"
 ---

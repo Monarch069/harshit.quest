@@ -1,4 +1,5 @@
 ---
+description: "Sera: causal Hold/Long/Short prediction on second-level market data with Kalman, CUSUM and time-encoding features and an XGBoost classifier."
 series_title: "Projects"
 post_title: "Sera"
 ---

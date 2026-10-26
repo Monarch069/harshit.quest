@@ -1,4 +1,5 @@
 ---
+description: "CeresAstro: statistical detection of solar X-ray bursts in Chandrayaan-2 XSM light curves, with a precision/recall evaluation."
 series_title: "Projects"
 post_title: "CeresAstro"
 ---

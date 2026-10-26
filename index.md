@@ -1,4 +1,5 @@
 ---
+description: "Harshit Joshi, B.Tech Mathematics and Computing student at IIT Jammu: time-series ML, Chandrayaan-2 signal detection and air-cleaner hardware projects."
 page_title: "Harshit Joshi"
 title: "Harshit Joshi | Mathematics & Computing, IIT Jammu"
 ---
