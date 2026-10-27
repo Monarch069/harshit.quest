@@ -1,15 +1,10 @@
 :root {
   --rosewater: #f2d5cf;
-  --flamingo: #eebebe;
   --pink: #f4b8e4;
   --mauve: #ca9ee6;
-  --red: #e78284;
-  --maroon: #ea999c;
   --peach: #ef9f76;
   --yellow: #e5c890;
   --green: #a6d189;
-  --teal: #81c8be;
-  --sky: #99d1db;
   --sapphire: #85c1dc;
   --blue: #8caaee;
   --lavender: #babbf1;
@@ -31,7 +26,44 @@
   --crust: #232634;
 
   --radius: 6px;
-  --content-width: 850px;
+  /* ~72 characters of monospace: a readable line, not a full-bleed slab */
+  --content-width: 72ch;
+
+  color-scheme: dark;
+}
+
+/* Light: Catppuccin Latte, with each accent darkened (same hue) until it
+   clears 4.5:1 on the darkest surface it sits on. Stock Latte fails AA. */
+@media (prefers-color-scheme: light) {
+  :root {
+    --rosewater: #af452d;
+    --pink: #bc1d91;
+    --mauve: #8534ef;
+    --peach: #b44201;
+    --yellow: #976014;
+    --green: #2f7620;
+    --sapphire: #177181;
+    --blue: #0b59f4;
+    --lavender: #1034fc;
+
+    --text: #4c4f69;
+    --subtext-1: #5c5f77;
+    --subtext-0: #63667a;
+
+    --overlay-2: #7c7f93;
+    --overlay-1: #636679;
+    --overlay-0: #9ca0b0;
+
+    --surface-2: #acb0be;
+    --surface-1: #bcc0cc;
+    --surface-0: #ccd0da;
+
+    --base: #eff1f5;
+    --mantle: #e6e9ef;
+    --crust: #dce0e8;
+
+    color-scheme: light;
+  }
 }
 
 /* ─────────────────────────────────────────────
@@ -48,6 +80,8 @@ html {
 
 body {
   margin: 0;
+  caret-color: var(--mauve);
+  scrollbar-color: var(--surface-2) var(--mantle);
   padding: 48px 24px;
   background: var(--base);
   color: var(--text);
@@ -194,7 +228,7 @@ blockquote {
   padding: 0.5rem 1.25rem;
 
   color: var(--subtext-1);
-  border-left: 2px solid var(--mauve);
+  border-left: 1px solid var(--mauve);
   background: var(--mantle);
 }
 
@@ -231,8 +265,7 @@ a {
   transition:
     color 180ms ease,
     background-size 300ms cubic-bezier(.22, 1, .36, 1),
-    border-color 180ms ease,
-    text-shadow 180ms ease;
+    border-color 180ms ease;
 }
 
 a:hover {
@@ -241,18 +274,11 @@ a:hover {
   background-size: 100% 1px;
 
   border-bottom-color: transparent;
-
-  text-shadow:
-    0 0 10px color-mix(
-      in srgb,
-      var(--blue) 25%,
-      transparent
-    );
 }
 
-/* A tiny terminal-ish arrow appears on hover */
+/* A tiny terminal-ish arrow marks links that leave the site */
 
-a::after {
+a[href^="http"]::after {
   content: " ↗" / "";
 
   position: absolute;
@@ -269,7 +295,7 @@ a::after {
     color 180ms ease;
 }
 
-a:hover::after {
+a[href^="http"]:hover::after {
   color: var(--sapphire);
   opacity: 1;
   transform: translate(2px, 0);
@@ -285,13 +311,6 @@ a:focus-visible {
   border-radius: 2px;
 
   border-bottom-color: var(--lavender);
-
-  text-shadow:
-    0 0 10px color-mix(
-      in srgb,
-      var(--lavender) 25%,
-      transparent
-    );
 }
 
 /* Keep images from inheriting link styling */
@@ -445,6 +464,7 @@ thead {
 th,
 td {
   padding: 0.7rem 0.9rem;
+  font-variant-numeric: tabular-nums;
   text-align: left;
   border-bottom: 1px solid var(--surface-0);
 }
@@ -463,7 +483,7 @@ tbody tr {
 }
 
 tbody tr:hover {
-  background: rgb(255 255 255 / 2%);
+  background: color-mix(in srgb, var(--text) 4%, transparent);
 }
 
 tbody tr:last-child td {
@@ -572,5 +592,29 @@ kbd {
     display: block;
     overflow-x: auto;
     white-space: normal;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Wrapping and motion preferences
+   ───────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p, li {
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
   }
 }
