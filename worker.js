@@ -1,4 +1,11 @@
 const STATIC_CACHE = "public, max-age=86400, stale-while-revalidate=604800";
+// Headers from ssg 1.0's generated worker (docs/deploy.md#headers); X-SSG-Version stays off.
+const PAGE_CACHE = "public, max-age=300";
+const TYPES = {
+  ".html": "text/html; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
+  ".txt": "text/plain; charset=utf-8"
+};
 
 export default {
   async fetch(request, env) {
@@ -9,6 +16,11 @@ export default {
     if (url.protocol === "http:" || url.hostname === "www.harshit.quest") {
       url.protocol = "https:";
       url.hostname = "harshit.quest";
+
+      // Directory pages get their trailing slash in the same hop.
+      if (!path.endsWith("/") && (await env.ASSETS.fetch(new URL(`${path}/index.html`, url))).ok)
+        url.pathname = `${path}/`;
+
       return Response.redirect(url.toString(), 301);
     }
 
@@ -62,6 +74,15 @@ export default {
 
     const headers = new Headers(response.headers);
     headers.set("Vary", "Accept");
+    headers.set("Content-Type", TYPES[extension]);
+    headers.set("X-SSG-Format", extension.slice(1));
+
+    if (status === 200) {
+      headers.set("Cache-Control", PAGE_CACHE);
+
+      if (extension === ".html")
+        headers.set("Link", `<${path}index.md>; rel="alternate"; type="text/markdown"`);
+    }
 
     return new Response(response.body, {
       status,
