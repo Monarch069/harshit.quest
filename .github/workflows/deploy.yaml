@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: isworking/ssg
-          ref: 607381c2f3ce6834a7ad4472760c11779cb628c2  # v0.2
+          ref: 5f7ab8d292df9d37589f054c97f6d1acbbe853cf  # v1.0.1
           path: builder
 
       # ─────────────────────────────────────────────
@@ -37,34 +37,17 @@ jobs:
 
       - name: Build ssg
         run: |
-          cmake -S builder -B builder/build -DCMAKE_BUILD_TYPE=Release
+          cmake -S builder -B builder/build -DCMAKE_BUILD_TYPE=Release -DSSG_PLUGINS=OFF
           cmake --build builder/build --config Release
-
-      # ─────────────────────────────────────────────
-      # Inline CSS (removes the only render-blocking request)
-      # ─────────────────────────────────────────────
-
-      - name: Inline CSS
-        run: |
-          npx --yes lightningcss-cli@1.33.0 --minify style.css -o "$RUNNER_TEMP/style.min.css"
-          node -e '
-            const fs = require("fs");
-            const css = fs.readFileSync(process.argv[1], "utf8").trim().replace(/<\/style/gi, "<\\/style");
-            const link = "<link rel=\"stylesheet\" href=\"/style.css\">";
-            const html = fs.readFileSync("skeleton.html", "utf8");
-            if (!html.includes(link)) throw new Error("stylesheet link not found in skeleton.html");
-            fs.writeFileSync("skeleton.html", html.replace(link, () => `<style>${css}</style>`));
-          ' "$RUNNER_TEMP/style.min.css"
 
       # ─────────────────────────────────────────────
       # Generate dist/
       # ─────────────────────────────────────────────
 
       - name: Generate site
-        run: |
-          ./builder/build/ssg --check-links . 2> "$RUNNER_TEMP/ssg.log" || { cat "$RUNNER_TEMP/ssg.log"; exit 1; }
-          cat "$RUNNER_TEMP/ssg.log"
-          ! grep -q ': broken link ' "$RUNNER_TEMP/ssg.log"
+        # Broken links are warnings; --fail-on-warning makes them fail the build (exit 3).
+        # --target cloudflare adds dist/.assetsignore; our worker.js and wrangler.jsonc are kept.
+        run: ./builder/build/ssg build --check-links --fail-on-warning --target cloudflare .
 
       - name: Verify dist
         run: |

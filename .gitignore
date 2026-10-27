@@ -2,3 +2,4 @@
 /.wrangler
 /.remember
 .DS_Store
+/manifest.json

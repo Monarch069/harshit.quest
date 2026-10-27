@@ -9,7 +9,7 @@
   {{if description}}<meta name="description" content="{{description}}">{{end}}
   {{if noindex}}<meta name="robots" content="noindex">{{else}}<link rel="canonical" href="https://harshit.quest{{url}}">{{end}}
   <title></title>
-  <link rel="stylesheet" href="/style.css">
+  <style>{{inline "style.css"}}</style>
   <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
   <script type="speculationrules">
   {"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/cdn-cgi/*"}}]},"eagerness":"moderate"}]}

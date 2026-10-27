@@ -2,3 +2,6 @@ dist = "dist"
 templates = "templates"
 skeleton = "skeleton.html"
 base_url = "https://harshit.quest"
+
+[css]
+minify = true
